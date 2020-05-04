@@ -33,6 +33,5 @@ class Message(models.Model):
     status_code = models.CharField(max_length=255, editable=False)
     number = models.CharField(max_length=255, editable=False)
     cost = models.CharField(max_length=255, editable=False)
-    status = models.CharField(max_length=255, editable=False)
     time_added = models.DateTimeField(auto_now_add=True)
     time_last_edited = models.DateTimeField(auto_now_add=True)

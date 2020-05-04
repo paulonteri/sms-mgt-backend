@@ -24,7 +24,6 @@ class MessageAdmin(admin.ModelAdmin):
         "status_code",
         "number",
         "cost",
-        "status",
         "time_added",
         "time_last_edited",
     ]
