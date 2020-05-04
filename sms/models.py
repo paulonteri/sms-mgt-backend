@@ -36,6 +36,3 @@ class Message(models.Model):
     status = models.CharField(max_length=255, editable=False)
     time_added = models.DateTimeField(auto_now_add=True)
     time_last_edited = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        order_with_respect_to = 'message_info'
