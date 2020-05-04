@@ -7,13 +7,13 @@ class SmsInfo(models.Model):
     created per Africa'sTalking send SMS API call
     """
     success = models.BooleanField(
-        default=False, editable=False)  # check whether message(s) sent successfully
+        default=False, editable=False, null=True)  # check whether message(s) sent successfully
     message_text = models.CharField(
-        max_length=255, editable=False)  # actual sms messge text sent
+        max_length=255, editable=False, null=True)  # actual sms messge text sent
     africastalking_response = models.CharField(
-        max_length=255,  editable=False)  # response massage received from africastalking
+        max_length=255,  editable=False, null=True)  # response massage received from africastalking
     # time message(s) finished sending
-    time_sent = models.DateTimeField(editable=False)
+    time_sent = models.DateTimeField(editable=False, null=True)
     time_added = models.DateTimeField(
         auto_now_add=True)  # when the message object is first created
     time_last_edited = models.DateTimeField(
