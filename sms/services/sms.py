@@ -19,8 +19,7 @@ def send_sms(message, recipients):
         # buy a Dedicated Short Code to get a sender ID
         # response = sms.send(message, recipients, sender)
         response = sms.send(message, recipients)
-        print(response)
+        return response
     except Exception as e:
-        print(f"Error: {e}")
+        return f"Error: {e}"
 
-    pass
