@@ -13,6 +13,7 @@ lazy-object-proxy==1.4.3
 mccabe==0.6.1
 pycodestyle==2.5.0
 pylint==2.5.0
+python-dotenv==0.13.0
 pytz==2020.1
 requests==2.23.0
 schema==0.7.2

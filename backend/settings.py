@@ -1,6 +1,23 @@
+from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+env_path = f'{BASE_DIR}/.env'
+load_dotenv(dotenv_path=env_path)
+
+
+def get_env_variable(var_name):
+    """
+    Handling Key Import Errors
+    """
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = "Set the %s environment variable" % var_name
+        raise ImproperlyConfigured(error_msg)
+
 
 SECRET_KEY = 'n7)kkdn%^rrz9*3@4u86l4y7($#fb!$-szsmkd%&n7(b9_3m@r'
 
