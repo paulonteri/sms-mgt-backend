@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class MessageInfo(models.Model):
+class SmsInfo(models.Model):
     """
     general information about a group of SMS(s) is sent
     created per Africa'sTalking send SMS API call
@@ -28,7 +28,7 @@ class Message(models.Model):
     information about a single SMS sent to a single receiver
     """
     message_info = models.ForeignKey(
-        MessageInfo, on_delete=models.CASCADE, editable=False)
+        SmsInfo, on_delete=models.CASCADE, editable=False)
     message_id = models.CharField(max_length=255, editable=False)
     status_code = models.CharField(max_length=255, editable=False)
     number = models.CharField(max_length=255, editable=False)
