@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'sms',
 
 ]
 
@@ -114,3 +116,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny'
     ]
 }
+
+# Africa's talking
+AFRICASTALKING_USERNAME = get_env_variable("AFRICASTALKING_USERNAME")
+AFRICASTALKING_API_KEY = get_env_variable("AFRICASTALKING_API_KEY")
