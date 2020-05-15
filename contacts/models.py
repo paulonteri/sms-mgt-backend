@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
+from django.utils.translation import gettext_lazy as _
+
 
 def validate_phone(value):
     if len(value) != 12:
@@ -8,7 +10,7 @@ def validate_phone(value):
             _('%(value)s is not a correct phone number.'),
             params={'value': value},
         )
-    if value[0] != 2 or value[1] != 5 or value[0] != 4:
+    if value[0] != "2" or value[1] != "5" or value[2] != "4":
         raise ValidationError(
             _('%(value)s is not a correct Kenyan phone number.'),
             params={'value': value},
@@ -26,7 +28,7 @@ class Contact(models.Model):
         ('m', 'male'),
         ('f', 'female')]
     gender = models.CharField(
-        max_length=50, choices=GENDER_CHOICES, blank=True)
+        max_length=50, choices=GENDER_CHOICES, null=True)
     is_active = models.BooleanField(default=True)
     #
     time_created = models.DateTimeField(auto_now_add=True)
