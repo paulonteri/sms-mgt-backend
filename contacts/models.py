@@ -1,6 +1,5 @@
-from django.db import models
 from django.core.exceptions import ValidationError
-
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
@@ -19,8 +18,8 @@ def validate_phone(value):
 
 class Contact(models.Model):
     first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255, blank=True, null=True)
-    other_name = models.CharField(max_length=255, )
+    last_name = models.CharField(max_length=255)
+    other_name = models.CharField(max_length=255, blank=True, null=True)
     phone_number = models.CharField(max_length=12,
                                     unique=True, validators=[validate_phone])
     email = models.EmailField(blank=True, null=True)
