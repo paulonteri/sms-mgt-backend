@@ -71,5 +71,8 @@ class ContactTag(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        unique_together = ['contact', 'tag']
+
     def __str__(self):
         return f'{self.tag.name} {self.contact.first_name} {self.contact.last_name}'
