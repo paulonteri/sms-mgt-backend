@@ -1,10 +1,12 @@
+import requests
 from django.utils.timezone import datetime
 from sms.models import Message, SmsInfo
 from django.conf import settings
 import africastalking
 
-
 # Initialize SDK
+from sms.services.contacts import get_all_contacts_numbers
+
 username = settings.AFRICASTALKING_USERNAME
 apikey = settings.AFRICASTALKING_API_KEY
 africastalking.initialize(username, apikey)
@@ -23,6 +25,8 @@ def send_sms(message, recipients):
         # response = sms.send(message, recipients, sender)
         response = sms.send(message, recipients)
 
+        print(response)
+
         # save the sms info to the db
         sms_info_obj = SmsInfo(
             time_sent=time_sent,
@@ -40,13 +44,15 @@ def send_sms(message, recipients):
                     message_id=i["messageId"],
                     number=i["number"],
                     cost=i["cost"],
-                    status_code=i["statusCode"],))
+                    status_code=i["statusCode"], ))
 
         # save the list objects into the database in one query
         Message.objects.bulk_create(message_obj_list)
 
-        return response
-
+    except requests.exceptions.ConnectionError:
+        raise Exception("Network Error")
+    except requests.HTTPError:
+        raise Exception("Network Error")
     except Exception as e:
         # save the sms info to the db
         sms_info_obj = SmsInfo(
@@ -55,4 +61,14 @@ def send_sms(message, recipients):
             africastalking_response=e,
             success=False)
         sms_info_obj.save()
-        return f"Error: {e}"
+        raise e
+    else:
+        return response
+
+
+def send_to_all_contacts(message):
+    # send message to all contacts
+    try:
+        send_sms(message, get_all_contacts_numbers())
+    except Exception as e:
+        raise e
