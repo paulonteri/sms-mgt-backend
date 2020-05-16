@@ -4,12 +4,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 def validate_phone(value):
-    if len(value) != 12:
+    if len(value) != 13:
         raise ValidationError(
             _('%(value)s is not a correct phone number.'),
             params={'value': value},
         )
-    if value[0] != "2" or value[1] != "5" or value[2] != "4":
+    if value[0] != "+" or value[1] != "2" or value[2] != "5" or value[3] != "4":
         raise ValidationError(
             _('%(value)s is not a correct Kenyan phone number.'),
             params={'value': value},
@@ -20,7 +20,7 @@ class Contact(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     other_name = models.CharField(max_length=255, blank=True, null=True)
-    phone_number = models.CharField(max_length=12,
+    phone_number = models.CharField(max_length=13,
                                     unique=True, validators=[validate_phone])
     email = models.EmailField(blank=True, null=True)
     GENDER_CHOICES = [
@@ -30,8 +30,10 @@ class Contact(models.Model):
         max_length=50, choices=GENDER_CHOICES, null=True)
     is_active = models.BooleanField(default=True)
     #
-    time_created = models.DateTimeField(auto_now_add=True)
-    last_updated = models.DateTimeField(auto_now=True)
+    time_added = models.DateTimeField(
+        auto_now_add=True)
+    time_last_edited = models.DateTimeField(
+        auto_now_add=True)
 
     def save(self, *args, **kwargs):
         self.email = self.email.lower()
