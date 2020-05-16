@@ -3,13 +3,6 @@ from rest_framework import serializers
 from .models import Contact, Tag, ContactTag
 
 
-# Contact Serializer
-class ContactSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Contact
-        fields = "__all__"
-
-
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
@@ -20,3 +13,13 @@ class ContactTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactTag
         fields = "__all__"
+
+
+# Contact Serializer
+class ContactSerializer(serializers.ModelSerializer):
+    tags = ContactTagSerializer(source='contacttag_set', many=True, read_only=True)
+
+    class Meta:
+        model = Contact
+        fields = ["first_name", "last_name", "other_name", "phone_number", "email",
+                  "gender", "is_active", "time_created", "last_updated", "tags"]
