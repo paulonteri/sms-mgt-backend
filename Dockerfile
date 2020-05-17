@@ -5,7 +5,7 @@ RUN mkdir /code
 WORKDIR /code
 COPY . /code/
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt && python manage.py migrate --no-input
 
 ENV PORT 8080
 
