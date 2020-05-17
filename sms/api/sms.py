@@ -1,7 +1,7 @@
 from rest_framework.exceptions import APIException
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from sms.services.sms import send_sms, send_to_all_contacts, send_to_tags
+from sms.services.sms import send_sms, send_to_all_contacts, send_to_tags, send_to_contact
 
 
 class SendSms(APIView):
@@ -38,6 +38,20 @@ class SmsTagsAPI(APIView):
     def post(self, request, format=None):
         try:
             send_to_tags(message=request.data["message"], tags=request.data["tags"])
+        except Exception as error:
+            raise APIException(error)
+        else:
+            return Response("SMSs sent")
+
+
+class SmsContactAPI(APIView):
+    """
+    Send SMS to all contacts
+    """
+
+    def post(self, request, format=None):
+        try:
+            send_to_contact(message=request.data["message"], contact=request.data["contact"])
         except Exception as error:
             raise APIException(error)
         else:

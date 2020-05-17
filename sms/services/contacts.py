@@ -7,6 +7,9 @@ def get_all_contacts_numbers():
 
 
 def return_contact_numbers_with_tag(tags):
+    """
+    :return: the phone numbsers of contacts witha certain tag
+    """
     # verify data
     if not (len(tags) > 0):
         raise Exception("Tags cannot be blank")
@@ -30,6 +33,10 @@ def return_contact_numbers_with_tag(tags):
         return phone_nos
 
 
-
-
-
+def get_contact_number(contact):
+    # get a single contacts phone number
+    try:
+        cont = [Contact.objects.get(pk=contact).phone_number, ]
+        return cont
+    except:
+        raise Exception("Contact does not exist")

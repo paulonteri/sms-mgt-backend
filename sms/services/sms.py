@@ -5,7 +5,7 @@ from django.conf import settings
 import africastalking
 
 # Initialize SDK
-from sms.services.contacts import get_all_contacts_numbers, return_contact_numbers_with_tag
+from sms.services.contacts import get_all_contacts_numbers, return_contact_numbers_with_tag, get_contact_number
 
 username = settings.AFRICASTALKING_USERNAME
 apikey = settings.AFRICASTALKING_API_KEY
@@ -78,5 +78,13 @@ def send_to_tags(message, tags):
     # send message to specific tags
     try:
         send_sms(message, return_contact_numbers_with_tag(tags))
+    except Exception as e:
+        raise e
+
+
+def send_to_contact(message, contact):
+    # send message to specific contact
+    try:
+        send_sms(message, get_contact_number(contact))
     except Exception as e:
         raise e
