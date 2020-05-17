@@ -1,11 +1,8 @@
 from django.core.exceptions import ImproperlyConfigured
-from dotenv import load_dotenv
+
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-env_path = f'{BASE_DIR}/.env'
-load_dotenv(dotenv_path=env_path)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def get_env_variable(var_name):
@@ -124,9 +121,3 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny'
     ]
 }
-
-# Africa's talking
-AFRICASTALKING_USERNAME = get_env_variable("AFRICASTALKING_USERNAME")
-AFRICASTALKING_API_KEY = get_env_variable("AFRICASTALKING_API_KEY")
-
-CORS_ORIGIN_ALLOW_ALL = True
