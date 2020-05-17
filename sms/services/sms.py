@@ -5,7 +5,7 @@ from django.conf import settings
 import africastalking
 
 # Initialize SDK
-from sms.services.contacts import get_all_contacts_numbers, return_contact_numbers_with_tag, get_contact_number
+from contacts.services.contacts import get_all_contacts_numbers, return_contact_numbers_with_tag, get_contact_number
 
 username = settings.AFRICASTALKING_USERNAME
 apikey = settings.AFRICASTALKING_API_KEY
