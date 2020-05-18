@@ -2,7 +2,7 @@ name: Deploy the application to Google Cloud Run
 on:
   push:
     branches: 
-      - deploy
+      - master
   pull_request:
     branches:
       - 'deploy'
