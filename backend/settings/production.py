@@ -13,8 +13,6 @@ SECRET_KEY = get_env_variable("SECRET_KEY")
 DEBUG = get_env_variable("DEBUG")
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-print(ALLOWED_HOSTS)
-print(env.list('ALLOWED_HOSTS'))
 
 DATABASES = {
     'default': {
