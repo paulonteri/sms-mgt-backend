@@ -1,14 +1,15 @@
 from backend.settings.common import *
+import json
 
 # from dotenv import load_dotenv
 # env_path = f'{BASE_DIR}/.env'
 # load_dotenv(dotenv_path=env_path)
 
-SECRET_KEY = 'n7)kkdn%^rrz9*3@4u86l4y7($#fb!$-szsmkd%&n7(b9_3m@r'
+SECRET_KEY = get_env_variable("SECRET_KEY")
 
-DEBUG = True
+DEBUG = get_env_variable("DEBUG")
 
-ALLOWED_HOSTS = ["*", ]
+ALLOWED_HOSTS = json.loads(get_env_variable['ALLOWED_HOSTS'])
 
 DATABASES = {
     'default': {
@@ -25,7 +26,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':
         ('knox.auth.TokenAuthentication',),
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
+        'rest_framework.permissions.IsAuthenticated'
     ]
 }
 
