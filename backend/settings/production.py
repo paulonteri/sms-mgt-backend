@@ -8,9 +8,9 @@ env = Env()
 # env_path = f'{BASE_DIR}/.env'
 # load_dotenv(dotenv_path=env_path)
 
-SECRET_KEY = get_env_variable("SECRET_KEY")
+SECRET_KEY = get_env_variable('SECRET_KEY')
 
-DEBUG = get_env_variable("DEBUG")
+DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
