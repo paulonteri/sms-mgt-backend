@@ -1,5 +1,8 @@
 from backend.settings.common import *
 import json
+from environs import Env
+
+env = Env()
 
 # from dotenv import load_dotenv
 # env_path = f'{BASE_DIR}/.env'
@@ -9,7 +12,7 @@ SECRET_KEY = get_env_variable("SECRET_KEY")
 
 DEBUG = get_env_variable("DEBUG")
 
-ALLOWED_HOSTS = json.loads(get_env_variable['ALLOWED_HOSTS'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 DATABASES = {
     'default': {
