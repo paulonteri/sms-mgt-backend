@@ -7,7 +7,7 @@ load_dotenv(dotenv_path=env_path)
 
 SECRET_KEY = 'n7)kkdn%^rrz9*3@4u86l4y7($#fb!$-szsmkd%&n7(b9_3m@r'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*", ]
 

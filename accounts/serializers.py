@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import Group
 from rest_framework import serializers
 
 from contacts.serializers import ContactSerializer
@@ -53,3 +54,11 @@ class UserInformationSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserInformation
         fields = ["user", "contact"]
+
+
+class GroupSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Group
+        fields = "__all__"
+        depth = 1
