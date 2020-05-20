@@ -1,5 +1,5 @@
 from contacts.services.contacts import get_all_contacts_numbers, return_contact_numbers_with_tag, get_contact_number
-from sms.services.send import send_sms
+from sms.services.africastalking_api import send_sms
 
 
 def send_to_all_contacts(message):
