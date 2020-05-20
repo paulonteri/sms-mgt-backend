@@ -1,8 +1,10 @@
+from django.contrib.auth.models import AnonymousUser
 from knox.models import AuthToken
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from .models import UserInformation,User
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, UserInformationSerializer
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -11,6 +13,7 @@ class RegisterAPI(generics.GenericAPIView):
     """
     permission_classes = [permissions.DjangoModelPermissions]
     serializer_class = RegisterSerializer
+    queryset = User.objects.all()
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -31,7 +34,7 @@ class LoginAPI(generics.GenericAPIView):
     Login API
     """
     serializer_class = LoginSerializer
-    permission_classes = [permissions.AllowAny,]
+    permission_classes = [permissions.AllowAny, ]
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -58,3 +61,17 @@ class UserAPI(generics.RetrieveAPIView):
     def get_object(self):
         # get user using the token in isAuthenticated
         return self.request.user
+
+
+# Contact API
+class UserInformationAPI(generics.RetrieveAPIView):
+    queryset = UserInformation.objects.all()
+    serializer_class = UserInformationSerializer
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    def get_object(self):
+        # get user using the token in isAuthenticated
+        print(type(self.request.user) == AnonymousUser)
+        return UserInformation.objects.get(user=self.request.user)

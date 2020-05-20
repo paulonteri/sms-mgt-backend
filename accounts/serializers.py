@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 
-from .models import User
+from contacts.serializers import ContactSerializer
+from .models import User, UserInformation
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -43,3 +44,12 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect Credentials")
+
+
+class UserInformationSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    contact = ContactSerializer(read_only=True)
+
+    class Meta:
+        model = UserInformation
+        fields = ["user", "contact"]
