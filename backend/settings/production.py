@@ -14,6 +14,7 @@ DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -22,6 +23,7 @@ DATABASES = {
         'PASSWORD': get_env_variable("DB_PASSWORD"),
         'HOST': get_env_variable("DB_HOST"),
         'PORT': get_env_variable("DB_PORT"),
+        'CONN_MAX_AGE': 300,
     }
 }
 
