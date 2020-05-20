@@ -36,7 +36,8 @@ class Contact(models.Model):
         auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        self.email = self.email.lower()
+        if self.email:
+            self.email = self.email.lower()
         return super(Contact, self).save(*args, **kwargs)
 
     def __str__(self):
