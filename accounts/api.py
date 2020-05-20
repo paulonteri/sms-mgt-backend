@@ -102,7 +102,6 @@ class PermissionAPI(generics.ListAPIView):
     queryset = Permission.objects.all()
     serializer_class = PermissionSerializer
     permission_classes = [
-        # permissions.IsAuthenticated,
-        # permissions.DjangoModelPermissions
-        permissions.AllowAny
+        permissions.IsAuthenticated,
+        permissions.DjangoModelPermissions
     ]
