@@ -5,6 +5,9 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 
 # user manager
+from contacts.models import Contact
+
+
 class UserManager(BaseUserManager):
 
     def _create_user(self, username, email, password, is_staff, is_superuser, is_admin, **extra_fields):
@@ -51,3 +54,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['email']
 
     objects = UserManager()
+
+
+class UserInformation(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, editable=False)
+    contact = models.OneToOneField(Contact, on_delete=models.DO_NOTHING, null=True)
+    #
+    time_added = models.DateTimeField(
+        auto_now_add=True)
+    time_last_edited = models.DateTimeField(
+        auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} {self.contact.first_name}'
+
