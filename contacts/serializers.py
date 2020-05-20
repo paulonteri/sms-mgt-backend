@@ -15,9 +15,15 @@ class ContactTagSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class ContactTagLessDetailedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactTag
+        fields = ["id", "tag"]
+
+
 # Contact Serializer
 class ContactSerializer(serializers.ModelSerializer):
-    tags = ContactTagSerializer(source='contacttag_set', many=True, read_only=True)
+    tags = ContactTagLessDetailedSerializer(source='contacttag_set', many=True, read_only=True)
 
     class Meta:
         model = Contact
