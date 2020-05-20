@@ -27,7 +27,7 @@ class ContactAPI(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         # get tags
         try:
-            self.tags = json.loads(request.data.__getitem__("tags"))
+            self.tags = request.data["tags"]
         except Exception:
             pass
         return super().create(request, *args, **kwargs)
