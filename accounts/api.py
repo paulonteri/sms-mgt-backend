@@ -1,11 +1,11 @@
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from knox.models import AuthToken
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 
 from .models import UserInformation, User
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, UserInformationSerializer, \
-     GroupSerializer
+    GroupSerializer, PermissionSerializer
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -87,10 +87,22 @@ class AllUserInformationAPI(generics.ListAPIView):
     ]
 
 
+# user Groups
 class GroupAPI(generics.ListAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [
         permissions.IsAuthenticated,
         permissions.DjangoModelPermissions
+    ]
+
+
+# user Permissions
+class PermissionAPI(generics.ListAPIView):
+    queryset = Permission.objects.all()
+    serializer_class = PermissionSerializer
+    permission_classes = [
+        # permissions.IsAuthenticated,
+        # permissions.DjangoModelPermissions
+        permissions.AllowAny
     ]

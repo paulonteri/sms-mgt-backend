@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from rest_framework import serializers
 
 from contacts.serializers import ContactSerializer
@@ -48,6 +48,9 @@ class LoginSerializer(serializers.Serializer):
 
 
 class UserInformationSerializer(serializers.ModelSerializer):
+    """"
+    get All User Info
+    """
     user = UserSerializer(read_only=True)
     contact = ContactSerializer(read_only=True)
 
@@ -57,8 +60,30 @@ class UserInformationSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
+    """
+    Django groups
+    https://docs.djangoproject.com/en/3.0/ref/contrib/auth/#django.contrib.auth.models.Group
+    """
 
     class Meta:
         model = Group
+        fields = "__all__"
+        depth = 1
+
+
+class PermissionSerializer(serializers.ModelSerializer):
+    """
+    Django Permissions
+    https://docs.djangoproject.com/en/3.0/ref/contrib/auth/#django.contrib.auth.models.Permission
+    """
+
+    def create(self, validated_data):
+        raise serializers.ValidationError("Permissions cannot be edited")
+
+    def update(self, instance, validated_data):
+        raise serializers.ValidationError("Permissions cannot be edited")
+
+    class Meta:
+        model = Permission
         fields = "__all__"
         depth = 1
