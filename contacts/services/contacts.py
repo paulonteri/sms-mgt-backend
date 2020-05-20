@@ -64,3 +64,6 @@ def get_contact_number(contacts):
     else:
         print(phone_nos)
         return phone_nos
+
+# TODO: check whether a rest framework validation error will work
+# from rest_framework.exceptions import ValidationError
