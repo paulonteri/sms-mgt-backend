@@ -1,5 +1,7 @@
 from django.db import models
 
+from contacts.models import Contact
+
 
 class SmsInfo(models.Model):
     """
@@ -11,7 +13,7 @@ class SmsInfo(models.Model):
     message_text = models.CharField(
         max_length=255, editable=False, null=True)  # actual sms messge text sent
     africastalking_response = models.CharField(
-        max_length=255,  editable=False, null=True)  # response massage received from africastalking
+        max_length=255, editable=False, null=True)  # response massage received from africastalking
     # time message(s) finished sending
     time_sent = models.DateTimeField(editable=False, null=True)
     time_added = models.DateTimeField(
@@ -28,10 +30,11 @@ class Message(models.Model):
     information about a single SMS sent to a single receiver
     """
     message_info = models.ForeignKey(
-        SmsInfo, on_delete=models.CASCADE, editable=False)
+        SmsInfo, on_delete=models.PROTECT, editable=False)
     message_id = models.CharField(max_length=255, editable=False)
     status_code = models.CharField(max_length=255, editable=False)
-    number = models.CharField(max_length=255, editable=False)
+    contact = models.ForeignKey(Contact, on_delete=models.PROTECT, editable=False)
     cost = models.CharField(max_length=255, editable=False)
     time_added = models.DateTimeField(auto_now_add=True)
     time_last_edited = models.DateTimeField(auto_now_add=True)
+    number = models.CharField(max_length=255, null=True, blank=True, editable=False)
