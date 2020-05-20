@@ -5,7 +5,7 @@ import requests
 from django.conf import settings
 
 from sms.models import SmsInfo, Message
-
+from contacts.models import Contact
 
 # Initialize SDK
 username = settings.AFRICASTALKING_USERNAME
@@ -37,15 +37,38 @@ def send_sms(message, recipients):
         sms_info_obj.save()
 
         # save the messages sent
+        contact_list = Contact.objects.all()
         message_obj_list = []
+
         for i in response['SMSMessageData']['Recipients']:
-            message_obj_list.append(
-                Message(
-                    message_info=sms_info_obj,
-                    message_id=i["messageId"],
-                    number=i["number"],
-                    cost=i["cost"],
-                    status_code=i["statusCode"], ))
+            # check for contact
+            if contact_list.filter(phone_number__exact=i["number"]).exists:
+                # if we have the contact saved...
+                message_obj_list.append(
+                    Message(
+                        message_info=sms_info_obj,
+                        message_id=i["messageId"],
+                        contact=contact_list.get(phone_number__exact=i["number"]),
+                        cost=i["cost"],
+                        status_code=i["statusCode"],
+                    ))
+            else:
+                # create & save contact
+                contact_obj = Contact(
+                    first_name="First Name",
+                    last_name="Doe",
+                    phone_number=i["number"])
+                contact_obj.save()
+                #
+                #
+                # save message
+                message_obj_list.append(
+                    Message(
+                        message_info=sms_info_obj,
+                        message_id=i["messageId"],
+                        contact=contact_obj,
+                        cost=i["cost"],
+                        status_code=i["statusCode"], ))
 
         # save the list objects into the database in one query
         Message.objects.bulk_create(message_obj_list)
