@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     'knox',
     'accounts',
     'sms',
-    'contacts'
+    'contacts',
+    'finance'
 
 ]
 
