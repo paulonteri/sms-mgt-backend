@@ -67,5 +67,5 @@ class UserInformation(models.Model):
         auto_now_add=True)
 
     def __str__(self):
-        return f'{self.user.username} {self.contact.first_name}'
+        return f'{self.user.username}'
 

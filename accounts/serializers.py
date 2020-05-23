@@ -6,14 +6,22 @@ from contacts.serializers import ContactSerializer
 from .models import User, UserInformation
 
 
+class GroupMinimalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ["id", "name"]
+
+
 class UserSerializer(serializers.ModelSerializer):
     """
     User Serializer
     """
+    groups = GroupMinimalSerializer(many=True)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email')
+        fields = ('id', 'username', 'email', 'groups')
+        depth = 1
 
 
 class RegisterSerializer(serializers.ModelSerializer):
