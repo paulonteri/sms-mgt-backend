@@ -14,7 +14,6 @@ DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -23,6 +22,8 @@ DATABASES = {
         'PASSWORD': get_env_variable("DB_PASSWORD"),
         'HOST': get_env_variable("DB_HOST"),
         'PORT': get_env_variable("DB_PORT"),
+        # TODO enable this when moving to self hosted db
+        # 'CONN_MAX_AGE': 20,
     }
 }
 
@@ -33,7 +34,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated'
     ]
 }
-
 
 # Africa's talking
 AFRICASTALKING_USERNAME = get_env_variable("AFRICASTALKING_USERNAME")
