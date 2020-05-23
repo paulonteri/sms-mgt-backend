@@ -16,6 +16,7 @@ def get_balance():
         string_amount = response["UserData"]["balance"].replace('KES ', '')
         int_amount = float(string_amount)
         print(int_amount)
+        return int_amount
     except requests.exceptions.ConnectionError:
         raise Exception("Network Connection Error")
     except requests.HTTPError:
