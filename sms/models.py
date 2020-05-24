@@ -1,5 +1,6 @@
 from django.db import models
 
+from accounts.models import User
 from contacts.models import Contact
 
 
@@ -20,6 +21,8 @@ class SmsInfo(models.Model):
         auto_now_add=True)  # when the message object is first created
     time_last_edited = models.DateTimeField(
         auto_now_add=True)
+    #
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
 
     class Meta:
         ordering = ["time_last_edited"]
