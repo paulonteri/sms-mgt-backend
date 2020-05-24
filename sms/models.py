@@ -22,10 +22,13 @@ class SmsInfo(models.Model):
     time_last_edited = models.DateTimeField(
         auto_now_add=True)
     #
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, editable=False)
 
     class Meta:
         ordering = ["time_last_edited"]
+
+    def __str__(self):
+        return f'Success: {self.success},  User: {self.user},  {self.time_added}  Response: {self.africastalking_response}'
 
 
 class Message(models.Model):

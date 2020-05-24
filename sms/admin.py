@@ -7,6 +7,7 @@ class SmsInfoAdmin(admin.ModelAdmin):
 
     readonly_fields = [
         "success",
+        "user",
         "message_text",
         "africastalking_response",
         "time_sent",
