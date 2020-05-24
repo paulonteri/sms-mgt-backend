@@ -4,8 +4,8 @@ import africastalking
 import requests
 from django.conf import settings
 
-from sms.models import SmsInfo, Message
 from contacts.models import Contact
+from sms.models import SmsInfo, Message
 
 # Initialize SDK
 username = settings.AFRICASTALKING_USERNAME
@@ -14,7 +14,7 @@ africastalking.initialize(username, apikey)
 sms = africastalking.SMS
 
 
-def send_sms(message, recipients):
+def send_sms(user, message, recipients):
     """
     Send sms
     """
@@ -33,6 +33,7 @@ def send_sms(message, recipients):
             time_sent=time_sent,
             message_text=message,
             africastalking_response=response['SMSMessageData']['Message'],
+            user=user,
             success=True)
         sms_info_obj.save()
 
@@ -73,9 +74,25 @@ def send_sms(message, recipients):
         # save the list objects into the database in one query
         Message.objects.bulk_create(message_obj_list)
 
-    except requests.exceptions.ConnectionError:
+    except requests.exceptions.ConnectionError as e:
+        # save the sms info to the db
+        sms_info_obj = SmsInfo(
+            time_sent=time_sent,
+            message_text=message,
+            africastalking_response=e,
+            user=user,
+            success=False)
+        sms_info_obj.save()
         raise Exception("Network Connection Error")
-    except requests.HTTPError:
+    except requests.HTTPError as e:
+        # save the sms info to the db
+        sms_info_obj = SmsInfo(
+            time_sent=time_sent,
+            message_text=message,
+            africastalking_response=e,
+            user=user,
+            success=False)
+        sms_info_obj.save()
         raise Exception("HTTP Network Error")
     except Exception as e:
         # save the sms info to the db
@@ -83,6 +100,7 @@ def send_sms(message, recipients):
             time_sent=time_sent,
             message_text=message,
             africastalking_response=e,
+            user=user,
             success=False)
         sms_info_obj.save()
         raise e
