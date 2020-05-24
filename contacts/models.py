@@ -34,6 +34,8 @@ class Contact(models.Model):
         auto_now_add=True)
     time_last_edited = models.DateTimeField(
         auto_now_add=True)
+    #
+    user = models.ForeignKey('accounts.User', on_delete=models.DO_NOTHING, editable=False)
 
     def save(self, *args, **kwargs):
         if self.email:
@@ -62,6 +64,8 @@ class Tag(models.Model):
     #
     time_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+    #
+    user = models.ForeignKey('accounts.User', on_delete=models.DO_NOTHING, editable=False)
 
     def __str__(self):
         return f'{self.name}'
@@ -73,6 +77,8 @@ class ContactTag(models.Model):
     #
     time_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+    #
+    user = models.ForeignKey('accounts.User', on_delete=models.DO_NOTHING, editable=False)
 
     class Meta:
         unique_together = ['contact', 'tag']

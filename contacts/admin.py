@@ -3,8 +3,9 @@ from .models import Contact, ContactTag, Tag
 
 
 @admin.register(Contact)
-class SmsInfoAdmin(admin.ModelAdmin):
+class ContactAdmin(admin.ModelAdmin):
     readonly_fields = [
+        "user",
         "time_added",
         "time_last_edited",
     ]
