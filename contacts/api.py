@@ -1,7 +1,5 @@
-import json
-
+from rest_framework import permissions
 from rest_framework import viewsets
-from rest_framework.exceptions import ValidationError
 
 from .models import Contact, Tag, ContactTag
 from .serializers import ContactSerializer, TagSerializer, ContactTagSerializer
@@ -21,6 +19,7 @@ class ContactTagAPI(viewsets.ModelViewSet):
 class ContactAPI(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
+    permission_classes = [permissions.AllowAny, ]
 
     tags = None
 
@@ -41,3 +40,25 @@ class ContactAPI(viewsets.ModelViewSet):
                                  contact=Contact.objects.get(pk=instance.id))
                 obj.save()
         super().perform_create(serializer)
+
+    def update(self, request, *args, **kwargs):
+        if request.data["tags"]:
+            self.tags = (request.data["tags"])
+
+        return super().update(request, *args, **kwargs)
+
+    def perform_update(self, serializer):
+        #
+        print("perform_update")
+        instance = serializer.save()
+        #
+        cont_t_list = []
+        if instance and self.tags:
+            ContactTag.objects.filter(contact_id=instance.pk).delete()
+            #
+            for q in self.tags:
+                cont_t_list.append(ContactTag(contact_id=instance.pk, tag_id=q, user=self.request.user))
+
+            ContactTag.objects.bulk_create(cont_t_list)
+        #
+        super().perform_update(serializer)
