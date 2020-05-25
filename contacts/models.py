@@ -67,6 +67,11 @@ class Tag(models.Model):
     #
     user = models.ForeignKey('accounts.User', on_delete=models.DO_NOTHING, editable=False)
 
+    def save(self, *args, **kwargs):
+        if self.name:
+            self.name = self.name.lower()
+        return super(Tag, self).save(*args, **kwargs)
+
     def __str__(self):
         return f'{self.name}'
 
