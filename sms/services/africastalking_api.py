@@ -52,7 +52,7 @@ def send_sms(user, message, recipients):
                         contact=contact_list.get(phone_number__exact=i["number"]),
                         cost=i["cost"],
                         status_code=i["statusCode"],
-                        phone=i["number"]
+                        number=i["number"]
                     ))
             else:
                 # create & save contact
@@ -70,7 +70,7 @@ def send_sms(user, message, recipients):
                         message_id=i["messageId"],
                         contact=contact_obj,
                         cost=i["cost"],
-                        phone=i["number"],
+                        number=i["number"],
                         status_code=i["statusCode"], ))
 
         # save the list objects into the database in one query
