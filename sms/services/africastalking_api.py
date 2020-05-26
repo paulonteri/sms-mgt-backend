@@ -26,8 +26,6 @@ def send_sms(user, message, recipients):
         # response = sms.send(message, recipients, sender)
         response = sms.send(message, recipients)
 
-        print(response)
-
         # save the sms info to the db
         sms_info_obj = SmsInfo(
             time_sent=time_sent,

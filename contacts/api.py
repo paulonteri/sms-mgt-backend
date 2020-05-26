@@ -35,10 +35,12 @@ class ContactAPI(viewsets.ModelViewSet):
         # get contact
         instance = serializer.save()
         if self.tags and len(self.tags) > 0:
+            tg_obj_list = []
             for tg in self.tags:
-                obj = ContactTag(tag=Tag.objects.get(pk=tg),
-                                 contact=Contact.objects.get(pk=instance.id))
-                obj.save()
+                tg_obj_list.append(ContactTag(tag=Tag.objects.get(pk=tg),
+                                              contact=Contact.objects.get(pk=instance.id),
+                                              user=self.request.user))
+            ContactTag.objects.bulk_create(tg_obj_list)
         super().perform_create(serializer)
 
     def update(self, request, *args, **kwargs):
