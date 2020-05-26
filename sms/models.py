@@ -39,7 +39,7 @@ class Message(models.Model):
         SmsInfo, on_delete=models.PROTECT, editable=False)
     message_id = models.CharField(max_length=255, editable=False)
     status_code = models.CharField(max_length=255, editable=False)
-    contact = models.ForeignKey(Contact, on_delete=models.PROTECT, editable=False)
+    contact = models.ForeignKey(Contact, on_delete=models.SET_NULL, editable=False,null=True)
     cost = models.CharField(max_length=255, editable=False)
     time_added = models.DateTimeField(auto_now_add=True)
     time_last_edited = models.DateTimeField(auto_now_add=True)
