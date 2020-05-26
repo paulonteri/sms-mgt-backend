@@ -22,7 +22,7 @@ class SmsInfo(models.Model):
     time_last_edited = models.DateTimeField(
         auto_now_add=True)
     #
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, editable=False)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, editable=False)
 
     class Meta:
         ordering = ["time_last_edited"]

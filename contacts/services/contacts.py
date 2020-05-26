@@ -8,7 +8,7 @@ def get_all_contacts_numbers():
 
 def return_contact_numbers_with_tag(tags):
     """
-    :return: the phone numbsers of contacts witha certain tag
+    :return: the phone numbsers of contacts with a certain tag
     """
     # verify data
     if not (len(tags) > 0):

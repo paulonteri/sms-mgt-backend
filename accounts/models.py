@@ -59,7 +59,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class UserInformation(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, editable=False)
-    contact = models.OneToOneField(Contact, on_delete=models.DO_NOTHING, null=True)
+    contact = models.OneToOneField(Contact, on_delete=models.SET_NULL, null=True)
     #
     time_added = models.DateTimeField(
         auto_now_add=True)
