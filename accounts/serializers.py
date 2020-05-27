@@ -16,7 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
     """
     User Serializer
     """
-    groups = GroupMinimalSerializer(many=True)
+    groups = GroupMinimalSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
@@ -75,7 +75,8 @@ class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ["id","name"]
+        fields = ["id", "name"]
+
 
 class GroupSerializerDetailed(serializers.ModelSerializer):
     """

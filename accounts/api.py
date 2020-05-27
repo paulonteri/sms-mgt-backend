@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group, Permission
 from knox.models import AuthToken
-from rest_framework import generics, permissions
-from rest_framework.exceptions import APIException
+from rest_framework import generics, permissions, viewsets
+from rest_framework.exceptions import APIException, MethodNotAllowed
 from rest_framework.response import Response
 
 from .models import UserInformation, User
@@ -69,6 +69,48 @@ class UserAPI(generics.RetrieveAPIView):
     def get_object(self):
         # get user using the token in isAuthenticated
         return self.request.user
+
+
+class UpdateUserAPI(viewsets.ModelViewSet):
+    """
+    Update API
+    """
+
+    permission_classes = [permissions.DjangoModelPermissions, permissions.IsAdminUser]
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+    grps = None
+
+    def perform_create(self, serializer):
+        raise MethodNotAllowed(list, "Not Alllowed")
+
+    def perform_destroy(self, instance):
+        raise MethodNotAllowed(list, "Not Alllowed")
+
+    def partial_update(self, request, *args, **kwargs):
+        if not request.data["groups"] or len(request.data["groups"]) < 1:
+            raise APIException("User must be in at least one group!")
+
+        self.grps = (request.data["groups"])
+
+        return super().partial_update(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        if not request.data["groups"] or len(request.data["groups"]) < 1:
+            raise APIException("User must be in at least one group!")
+
+        self.grps = (request.data["groups"])
+
+        return super().update(request, *args, **kwargs)
+
+    def perform_update(self, serializer):
+        #
+        instance = serializer.save()
+        # save groups
+        instance.groups.set(self.grps)
+        #
+        super().perform_update(serializer)
 
 
 # user Information  API
