@@ -75,8 +75,18 @@ class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
+        fields = ["id","name"]
+
+class GroupSerializerDetailed(serializers.ModelSerializer):
+    """
+    Django groups
+    https://docs.djangoproject.com/en/3.0/ref/contrib/auth/#django.contrib.auth.models.Group
+    """
+
+    class Meta:
+        model = Group
         fields = "__all__"
-        depth = 1
+        depth = 2
 
 
 class PermissionSerializer(serializers.ModelSerializer):
