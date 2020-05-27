@@ -1,6 +1,7 @@
 from django.contrib.auth.models import Group, Permission
 from knox.models import AuthToken
 from rest_framework import generics, permissions
+from rest_framework.exceptions import APIException
 from rest_framework.response import Response
 
 from .models import UserInformation, User
@@ -17,12 +18,18 @@ class RegisterAPI(generics.GenericAPIView):
     queryset = User.objects.all()
 
     def post(self, request, *args, **kwargs):
+        if not request.data["groups"] or len(request.data["groups"]) < 1:
+            raise APIException("User must be in at least one group!")
+
         serializer = self.get_serializer(data=request.data)
         # send back any errors
         serializer.is_valid(raise_exception=True)
         # save user
         user = serializer.save()
-        # send response back
+        # save groups
+        user.groups.set(request.data["groups"])
+
+        # send response
         return Response({
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             # create and send back token
