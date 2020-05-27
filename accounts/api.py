@@ -18,7 +18,7 @@ class RegisterAPI(generics.GenericAPIView):
     queryset = User.objects.all()
 
     def post(self, request, *args, **kwargs):
-        if not request.data["groups"] or len(request.data["groups"]) < 1:
+        if not "groups" in request.data or len(request.data["groups"]) < 1:
             raise APIException("User must be in at least one group!")
 
         serializer = self.get_serializer(data=request.data)
@@ -89,7 +89,7 @@ class UpdateUserAPI(viewsets.ModelViewSet):
         raise MethodNotAllowed(list, "Not Alllowed")
 
     def partial_update(self, request, *args, **kwargs):
-        if not request.data["groups"] or len(request.data["groups"]) < 1:
+        if not "groups" in request.data or len(request.data["groups"]) < 1:
             raise APIException("User must be in at least one group!")
 
         self.grps = (request.data["groups"])
@@ -97,7 +97,7 @@ class UpdateUserAPI(viewsets.ModelViewSet):
         return super().partial_update(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
-        if not request.data["groups"] or len(request.data["groups"]) < 1:
+        if not "groups" in request.data or len(request.data["groups"]) < 1:
             raise APIException("User must be in at least one group!")
 
         self.grps = (request.data["groups"])
