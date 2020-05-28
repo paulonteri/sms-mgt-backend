@@ -21,6 +21,10 @@ def send_sms(user, message, recipients):
     recipients = recipients
     message = message
     time_sent = datetime.now()
+    #
+    if len(message) > 160:
+        raise Exception("Ensure your message has less that 160 characters")
+
     try:
         # buy a Dedicated Short Code to get a sender ID
         # response = sms.send(message, recipients, sender)

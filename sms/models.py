@@ -12,7 +12,7 @@ class SmsInfo(models.Model):
     success = models.BooleanField(
         default=False, editable=False, null=True)  # check whether message(s) sent successfully
     message_text = models.CharField(
-        max_length=255, editable=False, null=True)  # actual sms messge text sent
+        max_length=160, editable=False, null=True)  # actual sms messge text sent
     africastalking_response = models.CharField(
         max_length=255, editable=False, null=True)  # response massage received from africastalking
     # time message(s) finished sending

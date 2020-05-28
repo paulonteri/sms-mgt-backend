@@ -1,16 +1,10 @@
-
-
 from rest_framework import permissions
 from rest_framework.exceptions import APIException, PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-
 from sms.services.africastalking_api import send_sms
 from sms.services.sms import send_to_all_contacts, send_to_tags, send_to_contact
-
-
-# from rest_framework import permissions
 
 
 class SendSms(APIView):
@@ -25,6 +19,10 @@ class SendSms(APIView):
                 request.user.has_perms('sms.add_smsinfo', 'sms.view_smsinfo') or
                 request.user.has_perms('contacts.view_contact')):
             raise PermissionDenied()
+
+        if len(request.data["message"]) > 160:
+            raise APIException("Ensure your message has less that 160 characters")
+
         sms = request.data
         return Response(
             send_sms(user=self.request.user, recipients=sms["recipients"], message=sms["message"])
@@ -42,6 +40,10 @@ class SmsAllContactsAPI(APIView):
                 request.user.has_perms('sms.add_smsinfo', 'sms.view_smsinfo') or
                 request.user.has_perms('contacts.view_contact')):
             raise PermissionDenied()
+
+        if len(request.data["message"]) > 160:
+            raise APIException("Ensure your message has less that 160 characters")
+
         try:
             send_to_all_contacts(user=self.request.user, message=request.data["message"])
         except Exception as error:
@@ -61,6 +63,10 @@ class SmsTagsAPI(APIView):
                 request.user.has_perms('sms.add_smsinfo', 'sms.view_smsinfo') or
                 request.user.has_perms('contacts.view_contact')):
             raise PermissionDenied()
+
+        if len(request.data["message"]) > 160:
+            raise APIException("Ensure your message has less that 160 characters")
+
         try:
             send_to_tags(user=self.request.user, message=request.data["message"], tags=request.data["tags"])
         except Exception as error:
@@ -80,6 +86,9 @@ class SmsContactAPI(APIView):
                 request.user.has_perms('sms.add_smsinfo', 'sms.view_smsinfo') or
                 request.user.has_perms('contacts.view_contact')):
             raise PermissionDenied()
+
+        if len(request.data["message"]) > 160:
+            raise APIException("Ensure your message has less that 160 characters")
 
         try:
             send_to_contact(user=self.request.user, message=request.data["message"], contact=request.data["contact"])
