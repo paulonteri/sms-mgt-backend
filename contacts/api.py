@@ -19,7 +19,6 @@ class ContactTagAPI(viewsets.ModelViewSet):
 class ContactAPI(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
-    permission_classes = [permissions.AllowAny, ]
 
     tags = None
 
