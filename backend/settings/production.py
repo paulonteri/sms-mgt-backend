@@ -22,7 +22,7 @@ DATABASES = {
         'PASSWORD': get_env_variable("DB_PASSWORD"),
         'HOST': get_env_variable("DB_HOST"),
         'PORT': get_env_variable("DB_PORT"),
-        'CONN_MAX_AGE': 10,
+        'CONN_MAX_AGE': 5,
     }
 }
 
