@@ -9,8 +9,8 @@ from sms.models import SmsInfo, Message
 
 # Initialize SDK
 username = settings.AFRICASTALKING_USERNAME
-apikey = settings.AFRICASTALKING_API_KEY
-africastalking.initialize(username, apikey)
+api_key = settings.AFRICASTALKING_API_KEY
+africastalking.initialize(username, api_key)
 sms = africastalking.SMS
 
 
