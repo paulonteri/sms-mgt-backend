@@ -2,6 +2,7 @@ from rest_framework import permissions
 from rest_framework.exceptions import APIException, PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.views import ListApiView
 
 from sms.services.africastalking_api import send_sms
 from sms.services.sms import send_to_all_contacts, send_to_tags, send_to_contact
